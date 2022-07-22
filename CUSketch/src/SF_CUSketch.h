@@ -2,7 +2,7 @@
 #define _SF_CU_SKETCH_H
 
 #include "CUSketch.h"
-#include "SF_SIMD.h"
+#include "../../LadderFilter/SF_SIMD.h"
 
 template <uint64_t total_memory_in_bytes, int filter_memory_percent>
 class CUSketchWithSF

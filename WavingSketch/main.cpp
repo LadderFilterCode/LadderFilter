@@ -184,19 +184,21 @@ void Test_Hitter(string PATH)
         int sf_memory = (memory * partition * 1.0 / 10.0);
         int sf_bucket_num = sf_memory / 24;
 
-        uint32_t l1_bucket_num = int(sf_bucket_num * 1.0);
+        uint32_t l1_bucket_num = int(sf_bucket_num * 0.99);
+        uint32_t l2_bucket_num = int(sf_bucket_num * 0.01);
         // Note that l2 = 0, we only use one layer in Super Spreader scenarios
 
-        uint32_t total_bucket_num = l1_bucket_num;
+        uint32_t total_bucket_num = l1_bucket_num + l2_bucket_num;
 
-        uint32_t l1_thres = 1;
+        uint32_t l1_thres = 2;
+        uint32_t l2_thres = 3;
 
         printf("\033[0m\033[1;4;36m> Memory size: %dKB\n\033[0m", memory / 1000);
 
         int SKETCH_NUM = 1;
         Abstract *sketch[SKETCH_NUM];
 
-        sketch[0] = new WavingSketch<16, 8>(memory - 24 * total_bucket_num, HIT, BF_memory, l1_bucket_num, l1_thres, 0, 0, 0, admit_thr);
+        sketch[0] = new WavingSketch<16, 8>(memory - 24 * total_bucket_num, HIT, BF_memory, l1_bucket_num, l1_thres, l2_bucket_num, l2_thres, 0, admit_thr);
 
         Data from;
         Data to;

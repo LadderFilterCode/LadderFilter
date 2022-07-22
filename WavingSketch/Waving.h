@@ -5,8 +5,7 @@
 #include <unistd.h>
 #include "./abstract.h"
 #include "./bitset.h"
-// #include "./ladder_filter/SF_SIMD.h"
-#include "./ladder_filter/SF_noSIMD.h"
+#include "../LadderFilter/SF_SIMD.h"
 
 #define data_type Data
 #define count_type int
@@ -105,11 +104,7 @@ public:
 		bitset = new BitSet(LENGTH);
 		buckets = new Bucket[BUCKET_NUM];
 
-		// SIMD
-		// SF = new SlidingFilter(L1_BUCKET, L2_BUCKET, 8, 16, 8, L1_thres, L1_thres, 100, 101);
-		// No_SIMD
-		SF = new SlidingFilter(L1_BUCKET, L2_BUCKET, L3_BUCKET, 8, 16, 8, L1_thres, L2_thres);
-		SF->printInfo();
+		SF = new LadderFilter(L1_BUCKET, L2_BUCKET, 8, 16, 8, L1_thres, L2_thres, 100, 200);
 
 		memset(buckets, 0, BUCKET_NUM * sizeof(Bucket));
 		rename(int(slot_num), int(counter_num));
@@ -230,8 +225,8 @@ public:
 	uint32_t hit_num = 0;
 	uint32_t admit_thres;
 	int HIT;
-	SlidingFilter *SF;
-	SlidingFilter *BF_SF;
+	LadderFilter *SF;
+	LadderFilter *BF_SF;
 };
 
 #endif // WAVING_H

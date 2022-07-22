@@ -1,7 +1,7 @@
 #ifndef SF_SPACESAVING_H
 #define SF_SPACESAVING_H
 
-#include "SF_SIMD.h"
+#include "../../LadderFilter/SF_SIMD.h"
 #include <algorithm>
 
 template<uint32_t ss_capacity>

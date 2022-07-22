@@ -3,7 +3,7 @@
 
 #include "InsertableIblt.h"
 // #include "SF_3level.h"
-#include "SF_SIMD.h"
+#include "../../LadderFilter/SF_SIMD.h"
 // #include "SF.h"
 
 template<uint64_t iblt_size_in_bytes, uint64_t sf_memory_in_bytes,
@@ -13,7 +13,11 @@ template<uint64_t iblt_size_in_bytes, uint64_t sf_memory_in_bytes,
 class SF_InsertableIBLT: public VirtualIBLT
 {
 public:                           //bucket1_memory               bucket2_memory
-    LadderFilter sf = LadderFilter(sf_memory_in_bytes*0.99, sf_memory_in_bytes*0.01, cols, key_len, counter_len, thres2);
+    LadderFilter sf = LadderFilter(sf_memory_in_bytes*0.99 / (cols * (key_len + counter_len)),
+                                   sf_memory_in_bytes*0.01 / (cols * (key_len + counter_len)),
+                                   cols, key_len, counter_len,
+                                   thres1, thres2,
+                                   100, 200);
     // LadderFilter sf = LadderFilter(sf_memory_in_bytes*0.99, sf_memory_in_bytes*0.01, thres2);
     InsertableIBLT<iblt_size_in_bytes> iblt;
 
